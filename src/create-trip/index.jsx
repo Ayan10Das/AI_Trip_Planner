@@ -65,8 +65,12 @@ function CreateTrip() {
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.data));
         setOpenDialog(false);
-        window.location.reload();
         genarateTripCheck();
+        
+        setTimeout(()=>{
+
+          window.location.reload();
+        },1000)
 
       })
       .catch((err) => alert('Login failed! please try again'))
@@ -159,7 +163,7 @@ function CreateTrip() {
 
       saveAiTripPlan(parsedData);
       setLoading(false);
-      // console.log("🎯 Trip Plan:", parsedData);
+      console.log("🎯 Trip Plan:", parsedData);
 
     } catch (err) {
       toast("Failed to generate trip plan, please try again!.");
