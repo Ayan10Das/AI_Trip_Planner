@@ -80,11 +80,17 @@ function CreateTrip() {
       return;
     }
 
-    if (!formData?.noOfDays > 8 || !formData?.Destination || !formData?.traveler || !formData?.budget) {
+    if (!formData?.noOfDays || !formData?.Destination || !formData?.traveler || !formData?.budget) {
       toast("Please fill all the details properly!");
       // console.log(import.meta.env.VITE_GOOGLE_GEMINI_API_KEY)
       return;
     }
+    if (formData?.noOfDays > 7) {
+      toast("Please do not provide the days more than 7");
+      // console.log(import.meta.env.VITE_GOOGLE_GEMINI_API_KEY)
+      return;
+    }
+
 
     setLoading(true);
     let prompt = `You are a travel planning API. Generate a travel plan in **strict JSON** format only.
