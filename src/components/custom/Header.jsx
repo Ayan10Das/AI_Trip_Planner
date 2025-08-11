@@ -61,17 +61,17 @@ function Header() {
           {user ? (
             <>
               <Link to="/">
-                <Button className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                <Button className="cursor-pointer rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
                   Home
                 </Button>
               </Link>
               <Link to="/my-trips">
-                <Button className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                <Button className="cursor-pointer rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
                   My Trips
                 </Button>
               </Link>
               <Button
-                className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150"
+                className="rounded-2xl cursor-pointer hover:bg-orange-500 hover:text-black transition duration-150"
                 onClick={handleLogout}
               >
                 Logout
@@ -89,7 +89,7 @@ function Header() {
             </>
           ) : (
             <Button
-              className="rounded-2xl hover:bg-gray-700 transition duration-150"
+              className="rounded-2xl cursor-pointer hover:bg-gray-700 transition duration-150"
               onClick={() => setOpenDialog(true)}
             >
               Sign In
