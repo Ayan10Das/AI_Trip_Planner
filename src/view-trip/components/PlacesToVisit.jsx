@@ -12,7 +12,7 @@ function PlacesToVisit({trip}) {
         <div key={idx} className='mt-2 p-2'>
             <h2 className='font-medium text-black text-xl'> Day :{item?.day} </h2>
 
-            <div className='grid grid-cols-2 gap-5 mt-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-2'>
                 {item?.plan?.map((places,idx)=>(
                    <div key={idx} className='mt-1'>
                    <div className='my-1.5'>🕧 Best time: {places.best_time}</div>

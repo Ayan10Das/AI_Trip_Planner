@@ -40,7 +40,7 @@ function PlaceCard({ places, currency }) {
       }
       target="_blank"
     >
-      <div className="flex flex-col sm:flex-row bg-white rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transition-transform duration-200 hover:scale-[1.02] w-full max-w-md mx-1">
+      <div className="flex flex-col sm:flex-row bg-neutral-200 rounded-2xl shadow-lg hover:shadow-2xl overflow-hidden transition-transform duration-200 hover:scale-[1.02] w-full max-w-md mx-1">
         {/* Image */}
         <div className="relative w-full sm:w-[180px] h-[200px] sm:h-auto">
           <img
@@ -61,7 +61,7 @@ function PlaceCard({ places, currency }) {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-800 leading-snug">
               {places?.place}
             </h2>
-            <p className="text-sm text-gray-600 mt-1 truncate sm:whitespace-normal sm:overflow-visible sm:text-clip">{places?.details}</p>
+            <p className="text-sm text-gray-600 mt-1 sm:whitespace-normal sm:overflow-visible sm:text-clip">{places?.details}</p>
           </div>
 
           {/* Info Pills */}
