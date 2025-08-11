@@ -51,7 +51,7 @@ const LocationAutocomplete = ({ onSelect }) => {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Enter a location"
-        className="w-120 p-2 border md:w-190  rounded shadow-2xl"
+        className="w-full p-2 border md:w-190  rounded shadow-2xl"
       />
       {places.length > 0 && (
         <ul className="mt-2 border border-gray-200 rounded">
