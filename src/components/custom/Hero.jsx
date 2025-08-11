@@ -1,23 +1,31 @@
 import React from 'react'
 import { Button } from '../ui/button'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Hero() {
   return (
-    <div className='flex flex-col gap-10 items-center mx-50'>
-      <h2
-      className='font-extrabold text-[25px] md:text-[50px] text-center mt-15'
-      ><span className='text-[#cb3009] custom'>Discover Your Next Adventure With AI:</span> 
-      {" "}Personalized Itineraries at Your Fingerprint
+    <div className='flex flex-col gap-8 items-center px-4 md:px-16 lg:px-32 max-w-7xl mx-auto mt-10'>
+
+      <h2 className='font-extrabold text-2xl md:text-5xl text-center mt-6 leading-snug'>
+        <span className='text-[#cb3009]'>Discover Your Next Adventure With AI:</span>{" "}
+        Personalized Itineraries at Your Fingertips
       </h2>
-      <p className='text-2xl text-center font-medium text-gray-700'>
-        Your personal trip planner and travel curator,creating custom itineraries tailored to your interests and budget.
+
+      <p className='text-lg md:text-2xl text-center font-medium text-gray-700 max-w-3xl'>
+        Your personal trip planner and travel curator, creating custom itineraries tailored to your interests and budget.
       </p>
 
       <Link to={'/create-trip'}>
-      <Button className="transition delay-80 duration-105 place-self-end-safe hover:scale-102 cursor-pointer">Get Started, it's FREE!</Button>
+        <Button className='px-6 py-3 text-base md:text-lg transition transform hover:scale-105 cursor-pointer'>
+          Get Started, it&apos;s FREE!
+        </Button>
       </Link>
-      <img src="/image2.png" alt="img" className='min-w-[300px] md:w-full min-h-[280px] md:h-auto rounded shadow'/>
+
+      <img
+        src="/image2.png"
+        alt="Adventure"
+        className='w-full max-w-md md:max-w-full h-auto rounded-lg shadow-lg mt-4'
+      />
 
     </div>
   )
