@@ -258,7 +258,10 @@ function CreateTrip() {
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-              <img src="/logo.svg" className='h-22 w-55 ml-22' alt="Logo" />
+              <div className='w-full flex justify-center items-center text-center'>
+
+              <img src="/logo.svg" className='h-22 w-55' alt="Logo" />
+              </div>
               <h2 className='font-bold text-lg mt-2'>Sign In with Google</h2>
               <p>Sign In with Google authentication securely!</p>
               <Button

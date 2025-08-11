@@ -166,7 +166,10 @@ function Header() {
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-              <img src="/logo.svg" className="h-22 w-55 ml-22" alt="Logo" />
+              <div className='flex justify-center items-center'>
+
+              <img src="/logo.svg" className="h-22 w-55" alt="Logo" />
+              </div>
               <h2 className="font-bold text-lg mt-2">Sign In with Google</h2>
               <p>Sign In with Google authentication securely!</p>
               <Button className="w-full mt-5 gap-3 items-center" onClick={login}>
