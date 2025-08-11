@@ -1,144 +1,183 @@
-import React, { useEffect, useState } from 'react'
-// import { ButtonSecondary } from '../ui/Btn-secondary';
+import React, { useState } from 'react';
 import { Button } from '../ui/button';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaGoogle, FaBars, FaTimes } from 'react-icons/fa';
 import { googleLogout } from '@react-oauth/google';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
-import { FaGoogle } from 'react-icons/fa';
-import { ButtonSecondary } from '../ui/Btn-secondary';
 import { Link } from 'react-router-dom';
 import { useUser } from '@/userContext';
-
 
 function Header() {
   const { user, setUser } = useUser();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [imgError, setImgError] = useState(false);
-
-  // useEffect(()=>{
-  //   console.log("USER :" , user)
-  // },[])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: (response) => {
-      getUserProfile(response)
-      // setOpenDialog(false)
+      getUserProfile(response);
     },
-    onError: (error) => console.log(error)
+    onError: (error) => console.log(error),
   });
 
   const getUserProfile = (tokenInfo) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo?.access_token}`, {
       headers: {
         Authorization: `Bearer ${tokenInfo.access_token}`,
-        Accept: 'Application/json'
-      }
+        Accept: 'Application/json',
+      },
     })
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.data));
-        // window.location.reload();
         setUser(res.data);
         setOpenDialog(false);
       })
-      .catch((err) => alert('Login failed! please try again'))
-  }
+      .catch(() => alert('Login failed! Please try again'));
+  };
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     googleLogout();
     localStorage.removeItem('user');
     setUser(null);
-    window.location.href="/";
-  }
+    window.location.href = "/";
+  };
 
   return (
-    <div className='p-2 shadow-sm bg-gray-250 flex justify-between items-center px-5 sticky top-0 z-50 bg-gray-300 w-screen'>
+    <header className="bg-gray-300 shadow-sm sticky top-0 z-50 w-full px-4 sm:px-6 lg:px-10">
+      <div className="flex items-center justify-between h-16 max-w-7xl mx-auto">
+        <Link to="/">
+          <img className="h-10 w-auto" src="/logo.svg" alt="Logo" />
+        </Link>
 
-      <img className='h-auto w-60 bg-sec' src="/logo.svg" alt="" />
-
-      <div>
-        {user ?
-          <div className='flex gap-3 justify-center items-center'>
-
-
-            <div className='flex  gap-2 justify-center items-center'>
-
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-4">
+          {user ? (
+            <>
               <Link to="/">
-                <Button className='rounded-2xl  transition-all delay-100 duration-150 place-self-end-safe hover:bg-orange-500 hover:text-black cursor-pointer hover:scale-x-105'> Home </Button>
+                <Button className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                  Home
+                </Button>
               </Link>
-
-              <Link to="my-trips">
-                <Button className='rounded-2xl transition-all delay-100 duration-150 place-self-end-safe hover:bg-orange-500 hover:text-black cursor-pointer hover:scale-x-105'> My trips</Button>
+              <Link to="/my-trips">
+                <Button className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                  My Trips
+                </Button>
               </Link>
+              <Button
+                className="rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              {user.picture && !imgError ? (
+                <img
+                  src={user.picture}
+                  alt="User"
+                  onError={() => setImgError(true)}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              ) : (
+                <FaUserCircle className="h-10 w-10 text-gray-500" />
+              )}
+            </>
+          ) : (
+            <Button
+              className="rounded-2xl hover:bg-gray-700 transition duration-150"
+              onClick={() => setOpenDialog(true)}
+            >
+              Sign In
+            </Button>
+          )}
+        </nav>
 
-              <div>
-
-                <Button className='rounded-2xl transition-all delay-100 duration-150 place-self-end-safe hover:bg-orange-500 hover:text-black cursor-pointer hover:scale-x-105'
-                  onClick={handleLogout}
-                > Logout </Button>
-              </div>
-
-              <div>
-
-                {user?.picture && !imgError ? (
-                  <img
-                    src={user?.picture}
-                    className="h-10 w-11 rounded-full object-cover  hidden md:block"
-                    alt="user"
-                    onError={() => setImgError(true)}
-                  />
-
-                ) :
-                  <div >
-                    <FaUserCircle className='h-10 w-12 text-gray-500  hidden md:block' />
-                    {/* <div className='p-1 font-light text-sm'>{user.name}</div> */}
-                  </div>
-
-                }
-              </div>
-            </div>
-
-          </div>
-          :
-          // <ButtonSecondary/>
-          <Button className="rounded-2xl transition-all delay-100 duration-150 place-self-end-safe hover:bg-gray-700 cursor-pointer hover:scale-x-105"
-            onClick={() => setOpenDialog(true)}
-          >Sign In</Button>
-        }
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle Menu"
+            className="text-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-500"
+          >
+            {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </div>
       </div>
 
-      <Dialog open={openDialog}>
+      {/* Mobile Nav */}
+      {mobileMenuOpen && (
+        <nav className="md:hidden bg-gray-200 border-t border-gray-300 px-4 py-3 space-y-3">
+          {user ? (
+            <>
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                <Button fullWidth className="w-full mt-1 rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                  Home
+                </Button>
+              </Link>
+              <Link to="/my-trips" onClick={() => setMobileMenuOpen(false)}>
+                <Button fullWidth className="w-full mt-1 rounded-2xl hover:bg-orange-500 hover:text-black transition duration-150">
+                  My Trips
+                </Button>
+              </Link>
+              <Button
+                fullWidth
+                className="w-full rounded-2xl mt-1 hover:bg-orange-500 hover:text-black transition duration-150"
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Logout
+              </Button>
+              <div className="flex justify-center mt-2">
+                {user.picture && !imgError ? (
+                  <img
+                    src={user.picture}
+                    alt="User"
+                    onError={() => setImgError(true)}
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                ) : (
+                  <FaUserCircle className="h-10 w-10 text-gray-500" />
+                )}
+              </div>
+            </>
+          ) : (
+            <Button
+              fullWidth
+              className="w-full rounded-2xl hover:bg-gray-700 transition duration-150"
+              onClick={() => {
+                setOpenDialog(true);
+                setMobileMenuOpen(false);
+              }}
+            >
+              Sign In
+            </Button>
+          )}
+        </nav>
+      )}
 
+      <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-
-              <img src="/logo.svg" className='h-22 w-55 ml-22' />
-              <h2 className='font-bold text-lg mt-2'>Sign In with Google</h2>
+              <img src="/logo.svg" className="h-22 w-55 ml-22" alt="Logo" />
+              <h2 className="font-bold text-lg mt-2">Sign In with Google</h2>
               <p>Sign In with Google authentication securely!</p>
-              <Button
-                className='w-full mt-5 gap-3 items-center'
-                onClick={login}
-              >
-                <FaGoogle className='h-7 w-7' />Sign In</Button>
+              <Button className="w-full mt-5 gap-3 items-center" onClick={login}>
+                <FaGoogle className="h-7 w-7" /> Sign In
+              </Button>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
-
       </Dialog>
-
-
-    </div>
-  )
+    </header>
+  );
 }
 
 export default Header;

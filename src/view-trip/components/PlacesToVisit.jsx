@@ -5,7 +5,7 @@ import PlaceCard from './PlaceCard'
 function PlacesToVisit({trip}) {
   return (
     <div>
-    <h2 className='font-sans text-2xl font-medium mt-8'>Places To Visit</h2>
+    <h2 className='font-sans text-xl md:text-2xl font-light md:font-medium mt-8'>Places To Visit</h2>
 
     <div>
     {trip?.TripData?.itinerary.map((item,idx)=>(

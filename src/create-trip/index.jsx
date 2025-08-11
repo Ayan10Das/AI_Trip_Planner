@@ -145,6 +145,7 @@ const { setUser } = useUser();
 `
     try {
       // console.log(prompt)
+      toast("Please wait patiently, trip generation may take 2-5 miniutes")
       const rawData = await generateTripPlan(prompt);
 
       let parsedData;
@@ -210,7 +211,7 @@ const { setUser } = useUser();
         </div>
 
         <div>
-          <h2 className='text-xl mt-3 mb-2 font-medium px-2'>How many days are you planning for th trip?</h2>
+          <h2 className='text-xl mt-3 mb-2 font-medium px-2'>How many days are you planning for the trip?</h2>
           <Input
             onChange={(e) => {
               handleInputChange("noOfDays", e.target.value)

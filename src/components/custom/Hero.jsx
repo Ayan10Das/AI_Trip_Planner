@@ -6,7 +6,7 @@ function Hero() {
   return (
     <div className='flex flex-col gap-10 items-center mx-50'>
       <h2
-      className='font-extrabold text-[50px] text-center mt-15'
+      className='font-extrabold text-[25px] md:text-[50px] text-center mt-15'
       ><span className='text-[#cb3009] custom'>Discover Your Next Adventure With AI:</span> 
       {" "}Personalized Itineraries at Your Fingerprint
       </h2>
@@ -17,7 +17,7 @@ function Hero() {
       <Link to={'/create-trip'}>
       <Button className="transition delay-80 duration-105 place-self-end-safe hover:scale-102 cursor-pointer">Get Started, it's FREE!</Button>
       </Link>
-      <img src="/image2.png" alt="img" className='w-full rounded shadow'/>
+      <img src="/image2.png" alt="img" className='min-w-[300px] md:w-full min-h-[280px] md:h-auto rounded shadow'/>
 
     </div>
   )

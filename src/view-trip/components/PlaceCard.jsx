@@ -40,7 +40,7 @@ function PlaceCard({ places, currency }) {
 
     return (
         <Link to={'https://www.google.com/maps/search/?api=1&query=' + `${places?.place}`} target='_blank'>
-            <div className='flex flex-col md:flex-row gap-2 transition-all duration-105 delay-50 ease-out hover:scale-x-105 shadow-xl hover:shadow-2xl border p-3 rounded-xl'>
+            <div className='flex flex-col md:flex-row min-h-[200px] gap-2 transition-all duration-105 delay-50 ease-out hover:scale-x-105 shadow-xl hover:shadow-2xl border p-3 rounded-xl'>
                 <img src={imageUrl || "/travel-3.jpg"}
                     alt='image'
                     onError={(e) => {
@@ -49,7 +49,7 @@ function PlaceCard({ places, currency }) {
                     }}
                     className='h-[153px] w-[165px] rounded-xl ' />
                 <div className='flex  gap-1 flex-wrap'>
-                    <h2 className='font-bold text-lg text-gray-700'> {places?.place} </h2>
+                    <h2 className='font-medium md:font-bold text-sm md:text-lg text-gray-700'> {places?.place} </h2>
                     <p className='font-medium text-sm text-gray-600'> {places?.details} </p>
                     <p className='font-bold text-sm w-full text-gray-600 mt-1 border rounded-xl hover:bg-gray-500 transition-all delay-50 duration-100 ease-out hover:text-white p-1'> 🕙Travel time : {places?.travel_time_minutes} min</p>
                     <p className='font-bold text-sm text-gray-600 mt-1 w-full border rounded-xl hover:bg-gray-500 transition-all delay-50 duration-100 ease-out hover:text-white p-1'>🎟️ Ticket price : {places?.ticket_price} {currency} </p>
