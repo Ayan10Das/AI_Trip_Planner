@@ -53,7 +53,7 @@ function ViewTrip() {
             <PlacesToVisit trip={trip} />
 
             <Footer />
-            :
+            
             <Link>
 
             </Link>
