@@ -16,7 +16,7 @@ function Hero() {
       </p>
 
       <Link to={'/create-trip'}>
-        <Button className='px-6 py-3 text-base md:text-lg transition transform hover:scale-105 cursor-pointer'>
+        <Button className='px-6 py-3 text-base md:text-lg transition transform delay-75 duration-100 hover:scale-105 cursor-pointer'>
           Get Started, it&apos;s FREE!
         </Button>
       </Link>

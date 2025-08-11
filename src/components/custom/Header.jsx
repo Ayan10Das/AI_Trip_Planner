@@ -89,7 +89,7 @@ function Header() {
             </>
           ) : (
             <Button
-              className="rounded-2xl cursor-pointer hover:bg-gray-700 transition duration-150"
+              className="rounded-2xl cursor-pointer transition transform delay-75 duration-100 hover:scale-105"
               onClick={() => setOpenDialog(true)}
             >
               Sign In
