@@ -10,8 +10,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { AiOutlineLoading } from "react-icons/ai";
 import { FaGoogle } from 'react-icons/fa';
@@ -22,9 +20,8 @@ import { db } from '@/components/services/firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '@/userContext';
 
-
 function CreateTrip() {
-const { setUser } = useUser();
+  const { setUser } = useUser();
 
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [formData, setFormData] = useState({});
@@ -32,7 +29,6 @@ const { setUser } = useUser();
   const [loading, setLoading] = useState(false);
   let navigator = useNavigate();
   const location = useLocation();
-  // const navigate = useNavigate();
 
   const handleInputChange = (name, value) => {
     setFormData((prevData) => ({
@@ -41,21 +37,14 @@ const { setUser } = useUser();
     }));
   }
 
-  // useEffect(() => {
-  //   console.log(formData)
-  // }, [formData]);
-
   const handlePlaceSelect = (place) => {
-    // console.log(place);
     setSelectedPlace(place);
     handleInputChange('Destination', place.display_name)
   }
 
-
   const login = useGoogleLogin({
     onSuccess: (response) => {
       getUserProfile(response)
-      // setOpenDialog(false)
     },
     onError: (error) => console.log(error)
   });
@@ -73,11 +62,10 @@ const { setUser } = useUser();
         setOpenDialog(false);
         toast("Now you can generate a trip, please click the button again!");
       })
-      .catch((err) => alert('Login failed! please try again'))
+      .catch(() => alert('Login failed! Please try again'))
   }
 
   const genarateTripCheck = async () => {
-
     const loggedIn = localStorage.getItem('user');
     if (!loggedIn) {
       setOpenDialog(true);
@@ -86,15 +74,12 @@ const { setUser } = useUser();
 
     if (!formData?.noOfDays || !formData?.Destination || !formData?.traveler || !formData?.budget) {
       toast("Please fill all the details properly!");
-      // console.log(import.meta.env.VITE_GOOGLE_GEMINI_API_KEY)
       return;
     }
     if (formData?.noOfDays > 7) {
       toast("Please do not provide the days more than 7");
-      // console.log(import.meta.env.VITE_GOOGLE_GEMINI_API_KEY)
       return;
     }
-
 
     setLoading(true);
     let prompt = `You are a travel planning API. Generate a travel plan in **strict JSON** format only.
@@ -106,7 +91,7 @@ const { setUser } = useUser();
 - Budget: ${formData.budget}
 - Use the destination-specific currency **ISO code** (e.g., "JPY", "INR")
 - Return only plain numbers for prices (no symbols)
-- Respond in valid JSON format ONLY — no markdown, no explanation , no other thing that may hinder to parse it as json.
+- Respond in valid JSON format ONLY — no markdown, no explanation, no other thing that may hinder parsing it as JSON.
 
 **Required structure**:
 
@@ -144,8 +129,7 @@ const { setUser } = useUser();
 }
 `
     try {
-      // console.log(prompt)
-      toast("Please wait patiently, trip generation may take 2-5 miniutes")
+      toast("Please wait patiently, trip generation may take 2-5 minutes")
       const rawData = await generateTripPlan(prompt);
 
       let parsedData;
@@ -162,11 +146,11 @@ const { setUser } = useUser();
         parsedData = rawData; // Already an object
       }
 
-      const docId= await saveAiTripPlan(parsedData);
+      const docId = await saveAiTripPlan(parsedData);
       setLoading(false);
 
       if (location.pathname === '/create-trip') {
-        navigator('/view-trip/'+docId);
+        navigator('/view-trip/' + docId);
       } else {
         toast("✅ Your trip is ready! Check My Trips.");
       }
@@ -182,7 +166,7 @@ const { setUser } = useUser();
   const saveAiTripPlan = async (tripData) => {
     setLoading(true);
     const docId = Date.now().toString();
-    await setDoc(doc(db, "AI_Trips", docId), { // doc(db,collection_name,document_name(string/Unique))
+    await setDoc(doc(db, "AI_Trips", docId), {
       userSelection: formData,
       TripData: tripData,
       user: JSON.parse(localStorage.getItem("user"))?.email,
@@ -193,21 +177,17 @@ const { setUser } = useUser();
     return docId;
   }
 
-
   return (
-    <div className='sm:px-10 md:px-32 lg:px-60 xl:px-75 px-5 mt-5'>
-      <h2 className='font-bold text-3xl '>Tell us your travel preferences ✈️</h2>
-      <p className='mt-3 text-gray-600 text-xl'>
-        Just provide some basic information and our trip planner will provide customized itinerary-based on your preferences.
+    <div className='sm:px-6 md:px-16 lg:px-32 xl:px-40 px-4 mt-5 max-w-5xl mx-auto'>
+      <h2 className='font-bold text-3xl'>Tell us your travel preferences ✈️</h2>
+      <p className='mt-3 text-gray-600 text-lg md:text-xl'>
+        Just provide some basic information and our trip planner will provide customized itineraries based on your preferences.
       </p>
 
-      <div className='mt-12 flex flex-col gap-3'>
-        <div >
-          <h2 className='text-xl mt-3 font-medium px-2'>What is your destintion of choice?</h2>
-          {/* <div className='border rounded shadow-xl w-[770px] h-[50px]'>  */}
+      <div className='mt-12 flex flex-col gap-4'>
+        <div>
+          <h2 className='text-xl mt-3 font-medium px-2'>What is your destination of choice?</h2>
           <LocationAutocomplete onSelect={handlePlaceSelect} />
-
-          {/* </div> */}
         </div>
 
         <div>
@@ -216,18 +196,21 @@ const { setUser } = useUser();
             onChange={(e) => {
               handleInputChange("noOfDays", e.target.value)
             }}
-            placeholder={'Ex:3'}
-            type="number" />
+            placeholder={'Ex: 3'}
+            type="number"
+          />
         </div>
-
       </div>
 
       <div className='mt-10 px-2'>
         <h2 className='text-2xl font-medium my-3'>What is your Budget?</h2>
-        <div className='grid grid-cols-3 gap-3 mt-5'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5'>
           {SelectBudgetOptions.map((item, index) => (
-            <div key={index}
-              className={`p-4 border shadow-lg cursor-pointer rounded-lg hover:shadow-2xl ${formData?.budget == item.title && 'transition delay-50 duration-150 ease-in-out shadow-lg border-black scale-105 -translate-y-1'}`}
+            <div
+              key={index}
+              className={`p-4 border shadow-lg cursor-pointer rounded-lg hover:shadow-2xl transition delay-50 duration-150 ease-in-out
+                ${formData?.budget === item.title ? 'shadow-lg border-black scale-105 -translate-y-1' : ''}
+              `}
               onClick={() => {
                 handleInputChange("budget", item.title)
               }}
@@ -242,10 +225,13 @@ const { setUser } = useUser();
 
       <div className='mt-10 px-2'>
         <h2 className='text-2xl font-medium my-3'>Who do you want to travel with?</h2>
-        <div className='grid grid-cols-3 gap-3 mt-5'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5'>
           {SelectTravelersList.map((item, index) => (
-            <div key={index}
-              className={`p-4 border shadow-lg cursor-pointer rounded-lg hover:shadow-2xl ${formData?.traveler == item.people && 'transition delay-50 duration-150 ease-in-out shadow-lg border-black scale-3d -translate-y-1'}`}
+            <div
+              key={index}
+              className={`p-4 border shadow-lg cursor-pointer rounded-lg hover:shadow-2xl transition delay-50 duration-150 ease-in-out
+                ${formData?.traveler === item.people ? 'shadow-lg border-black scale-105 -translate-y-1' : ''}
+              `}
               onClick={() => {
                 handleInputChange("traveler", item.people)
               }}
@@ -262,33 +248,31 @@ const { setUser } = useUser();
         <Button
           disabled={loading}
           className='hover:bg-amber-500 hover:text-black'
-          onClick={genarateTripCheck}>
-          {loading ? <AiOutlineLoading className='h-8 w-8 animate-spin' /> : "Genarate Trip"}
+          onClick={genarateTripCheck}
+        >
+          {loading ? <AiOutlineLoading className='h-8 w-8 animate-spin' /> : "Generate Trip"}
         </Button>
       </div>
 
       <Dialog open={openDialog}>
-
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-
-              <img src="/logo.svg" className='h-22 w-55 ml-22' />
+              <img src="/logo.svg" className='h-22 w-55 ml-22' alt="Logo" />
               <h2 className='font-bold text-lg mt-2'>Sign In with Google</h2>
               <p>Sign In with Google authentication securely!</p>
               <Button
                 className='w-full mt-5 gap-3 items-center'
                 onClick={login}
               >
-                <FaGoogle className='h-7 w-7' />Sign In</Button>
+                <FaGoogle className='h-7 w-7' />Sign In
+              </Button>
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
-
       </Dialog>
-
     </div>
   )
 }
 
-export default CreateTrip
+export default CreateTrip;
