@@ -129,7 +129,7 @@ function CreateTrip() {
 }
 `
     try {
-      toast("Please wait patiently, trip generation may take 2-5 minutes")
+      toast("Your dream trip is on the way! Please allow 2-5 minutes.")
       const rawData = await generateTripPlan(prompt);
 
       let parsedData;
@@ -173,7 +173,7 @@ function CreateTrip() {
       docId: docId
     });
     setLoading(false);
-    toast("Trip is generated!");
+    toast("Trip is generated🎉");
     return docId;
   }
 
