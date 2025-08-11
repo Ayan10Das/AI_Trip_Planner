@@ -16,16 +16,18 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { FaGoogle } from 'react-icons/fa';
 import { ButtonSecondary } from '../ui/Btn-secondary';
 import { Link } from 'react-router-dom';
+import { useUser } from '@/userContext';
 
 
 function Header() {
+  const { user, setUser } = useUser();
+
   const [openDialog, setOpenDialog] = useState(false);
   const [imgError, setImgError] = useState(false);
 
-  const user = JSON.parse(localStorage.getItem('user')) || "";
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  // useEffect(()=>{
+  //   console.log("USER :" , user)
+  // },[])
 
   const login = useGoogleLogin({
     onSuccess: (response) => {
@@ -44,10 +46,18 @@ function Header() {
     })
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.data));
+        // window.location.reload();
+        setUser(res.data);
         setOpenDialog(false);
-        window.location.reload();
       })
       .catch((err) => alert('Login failed! please try again'))
+  }
+
+  const handleLogout=()=>{
+    googleLogout();
+    localStorage.removeItem('user');
+    setUser(null);
+    window.location.href="/";
   }
 
   return (
@@ -73,11 +83,7 @@ function Header() {
               <div>
 
                 <Button className='rounded-2xl transition-all delay-100 duration-150 place-self-end-safe hover:bg-orange-500 hover:text-black cursor-pointer hover:scale-x-105'
-                  onClick={() => {
-                    googleLogout()
-                    localStorage.removeItem('user');
-                    window.location.href = "/";
-                  }}
+                  onClick={handleLogout}
                 > Logout </Button>
               </div>
 

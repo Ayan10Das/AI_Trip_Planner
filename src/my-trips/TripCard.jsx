@@ -28,7 +28,7 @@ function TripCard({ trip }) {
     };
 
     fetchImage();
-    console.log(typeof destination)
+    // console.log(typeof destination)
   }, [destination]);
 
 

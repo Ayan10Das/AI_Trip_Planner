@@ -20,9 +20,12 @@ import axios from 'axios';
 import { setDoc, doc } from 'firebase/firestore';
 import { db } from '@/components/services/firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useUser } from '@/userContext';
 
 
 function CreateTrip() {
+const { setUser } = useUser();
+
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [formData, setFormData] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
@@ -66,9 +69,9 @@ function CreateTrip() {
     })
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.data));
+        setUser(res.data); 
         setOpenDialog(false);
         toast("Now you can generate a trip, please click the button again!");
-
       })
       .catch((err) => alert('Login failed! please try again'))
   }
