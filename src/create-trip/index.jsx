@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LocationAutocomplete from '@/components/LocationAutoComplete'
 import { Input } from '@/components/ui/input';
 import { SelectBudgetOptions, SelectTravelersList } from '@/constants/options';
@@ -19,7 +19,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { setDoc, doc } from 'firebase/firestore';
 import { db } from '@/components/services/firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function CreateTrip() {
@@ -28,6 +28,8 @@ function CreateTrip() {
   const [openDialog, setOpenDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   let navigator = useNavigate();
+  const location = useLocation();
+  // const navigate = useNavigate();
 
   const handleInputChange = (name, value) => {
     setFormData((prevData) => ({
@@ -65,12 +67,12 @@ function CreateTrip() {
       .then((res) => {
         localStorage.setItem('user', JSON.stringify(res.data));
         setOpenDialog(false);
-        genarateTripCheck();
-        
-        setTimeout(()=>{
+        toast("Now you can generate a trip, please click the button again!");
+
+        setTimeout(() => {
 
           window.location.reload();
-        },1000)
+        }, 2000)
 
       })
       .catch((err) => alert('Login failed! please try again'))
@@ -161,8 +163,14 @@ function CreateTrip() {
         parsedData = rawData; // Already an object
       }
 
-      saveAiTripPlan(parsedData);
+      const docId= await saveAiTripPlan(parsedData);
       setLoading(false);
+
+      if (location.pathname === '/create-trip') {
+        navigator('/view-trip/'+docId);
+      } else {
+        toast("✅ Your trip is ready! Check My Trips.");
+      }
       console.log("🎯 Trip Plan:", parsedData);
 
     } catch (err) {
@@ -183,7 +191,7 @@ function CreateTrip() {
     });
     setLoading(false);
     toast("Trip is generated!");
-    navigator('/view-trip/' + docId)
+    return docId;
   }
 
 
