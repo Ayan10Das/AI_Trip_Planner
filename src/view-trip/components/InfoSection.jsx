@@ -53,9 +53,9 @@ function InfoSection({ trip }) {
         ].map((item, idx) => (
           <div
             key={idx}
-            className="transition delay-150 duration-300 ease-in-out 
+            className="transition delay-100 duration-250 ease-in-out 
               hover:bg-gray-500 hover:text-white hover:scale-105 hover:translate-y-1
-              p-1 border font-medium rounded-xl flex-1 min-w-[120px] text-center
+              p-1 border font-medium rounded-xl flex-1 min-w-[120px] flex justify-center items-center
               hover:shadow-xl h-auto"
           >
             {item.label} : {item.value}

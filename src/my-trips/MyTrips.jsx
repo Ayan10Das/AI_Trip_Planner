@@ -24,7 +24,7 @@ function MyTrips() {
         const q = query(collection(db, "AI_Trips"),
         where("user", "==", user?.email),
         orderBy("docId", "desc"),
-        limit(5)
+        limit(10)
     )
     const querySnapshot = await getDocs(q);
     setTrips([]);
@@ -43,7 +43,7 @@ function MyTrips() {
     return (
         <>
         <div className='sm:px-10 md:px-32 lg:px-60 xl:px-75 px-5 mt-5'>
-           <h2 className='font-medium text-2xl font-sans '>🏖️ Here are your last 5 planned trips, Click on any trip to view</h2> 
+           <h2 className='font-medium text-2xl font-sans '>🏖️ Here is your few planned trips, Click on any trip to view...</h2> 
 
            <div className=" grid grid-cols-2 md:grid-cols-3 gap-10 my-5">
 

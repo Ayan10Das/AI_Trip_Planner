@@ -34,6 +34,7 @@ function PlaceCard({ places, currency }) {
   }, [destination]);
 
   return (
+    <>
     <Link
       to={
         "https://www.google.com/maps/search/?api=1&query=" + `${places?.place}`
@@ -85,6 +86,7 @@ function PlaceCard({ places, currency }) {
         </div>
       </div>
     </Link>
+            </>
   );
 }
 
