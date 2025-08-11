@@ -69,11 +69,6 @@ function CreateTrip() {
         setOpenDialog(false);
         toast("Now you can generate a trip, please click the button again!");
 
-        setTimeout(() => {
-
-          window.location.reload();
-        }, 2000)
-
       })
       .catch((err) => alert('Login failed! please try again'))
   }
