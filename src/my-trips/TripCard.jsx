@@ -33,7 +33,7 @@ function TripCard({ trip }) {
 
 
   return (
-    <div className='mt-5 hover:scale-103 rounded-xl min-h-[380px] min-w-[290px] border shadow-xl transition-all duration-105 delay-75 ease-out'>
+    <div className='mt-5 hover:scale-103 rounded-xl min-h-[380px] w-auto border shadow-xl transition-all duration-105 delay-75 ease-out'>
 
       <Link to={'/view-trip/'+trip?.docId}>
 
