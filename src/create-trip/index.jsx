@@ -146,6 +146,7 @@ function CreateTrip() {
         parsedData = rawData; // Already an object
       }
 
+      console.log(parsedData)
       const docId = await saveAiTripPlan(parsedData);
       setLoading(false);
 

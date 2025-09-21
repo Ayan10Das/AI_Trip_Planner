@@ -8,7 +8,7 @@ export async function generateTripPlan(prompt) {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model:  'deepseek/deepseek-r1-0528:free',   //'z-ai/glm-4.5-air:free', // or 'mistralai/mixtral-8x7b'
+        model:  'z-ai/glm-4.5-air:free',   //'z-ai/glm-4.5-air:free', // or 'mistralai/mixtral-8x7b'
         messages: [
           {
             role: 'user',
